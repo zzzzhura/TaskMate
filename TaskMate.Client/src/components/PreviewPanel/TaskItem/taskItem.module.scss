@@ -1,0 +1,130 @@
+.active {
+    position: relative;
+    border-radius: 20px;
+    margin: 0 20px 10px 20px;
+    padding: 10px 15px;
+    cursor: pointer;
+    $border: 2px;
+    color: #fff;
+    background: white;
+    background-clip: padding-box;
+    border: solid $border #0000001a;
+  
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      margin: -$border; /* !importanté */
+      border-radius: inherit; /* !importanté */
+      background: linear-gradient(
+        108.5deg,
+        #72aaff -0.22%,
+        #b99def 25.3%,
+        #ff8fe0 54.47%,
+        #ffc67b 79.47%,
+        #fff621 99.78%
+      );
+    }
+  }
+  
+  .root {
+    position: relative;
+    border-radius: 20px;
+    margin: 0 20px 10px 20px;
+    padding: 10px 15px;
+    cursor: pointer;
+    $border: 2px;
+    color: #fff;
+    background: white;
+    background-clip: padding-box;
+    border: solid $border #0000001a;
+  
+    .header {
+      display: flex;
+      justify-content: space-between;
+  
+      .actions {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        right: 15px;
+        top: 38px;
+        border: 1px solid #ddd;
+        font-size: 12px;
+        font-weight: 500;
+        border-radius: 10px;
+        height: 65px;
+        width: 190px;
+        background: #ffffff;
+        box-shadow: -4px 4px 14px 0px #00000024;
+        transition: opacity ease-in-out 100s;
+        opacity: 0;
+  
+        &:hover {
+          display: block;
+        }
+  
+        li {
+          display: flex;
+          align-items: center;
+          padding: 8px 10px;
+          width: 100%;
+          margin: 0;
+  
+          &:hover {
+            background: rgb(238, 238, 238);
+          }
+        }
+  
+        .delete_action {
+          a {
+            color: red;
+          }
+        }
+      }
+  
+      .open {
+        display: block;
+        opacity: 1;
+      }
+    }
+  
+    .tags {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+  
+      span {
+        margin-right: 10px;
+        border-radius: 16.88px;
+        border: 1.5px solid black;
+        padding: 5px 10px;
+        font-size: 10px;
+        flex: 0 0 20%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+  
+    .description {
+      font-size: 12px;
+      opacity: 0.5;
+      margin-top: 10px;
+    }
+  
+    .date {
+      display: flex;
+      margin-top: 20px;
+      p {
+        margin-left: 8px;
+        opacity: 0.5;
+        font-size: 14px;
+      }
+    }
+  }
+  

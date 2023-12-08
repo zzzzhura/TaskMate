@@ -1,0 +1,3 @@
+interface CreateTagRequest {
+    name: string;
+}

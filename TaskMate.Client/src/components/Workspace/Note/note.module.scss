@@ -1,0 +1,136 @@
+.root {
+  .cover {
+    background-image: url(/img/note-cover.png);
+    background-size: cover;
+    height: 300px;
+    position: relative;
+
+    span {
+      position: absolute;
+      top: 80%;
+      left: 60%;
+
+      button {
+        color: black;
+        font-size: 10px;
+        margin-left: 5px;
+        width: 145px;
+        height: 43px;
+        top: 292px;
+        left: 1495px;
+        padding: 15px, 17px, 15px, 18px;
+        border-radius: 10px;
+        gap: 24px;
+        background: #ffffff4d;
+
+        &:hover {
+          border: 1px solid gray;
+        }
+      }
+    }
+  }
+
+  .info {
+    margin-left: 100px;
+    margin-top: 20px;
+    .title {
+      font-weight: 800;
+    }
+
+    .tags {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      position: relative;
+
+      .placeholder {
+        color: gray;
+        display: none;
+      }
+
+      span {
+        margin-right: 10px;
+        border-radius: 16.88px;
+        border: 1.5px solid black;
+        padding: 5px 10px;
+        font-size: 12px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .select_btn {
+        background: white;
+        border: 1px solid black;
+        color: black;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 2px 20px;
+        border-radius: 15px;
+        margin-bottom: 5px;
+
+        .actions {
+          display: none;
+          position: absolute;
+          top: 0;
+          margin-left: 55px;
+          border: 1px solid #ddd;
+          border-radius: 16px;
+          width: 190px;
+          box-shadow: -4px 4px 15px 0px #00000024;
+          background: #efefef;
+
+          li {
+            display: flex;
+            align-items: center;
+            padding: 8px 10px;
+            width: 100%;
+            margin: 0;
+            cursor: pointer;
+            font-family: "Raleway", sans-serif;
+            color: #000000b0;
+            font-size: 13px;
+            font-weight: 500;
+
+            &:hover {
+              background: rgb(222, 222, 222);
+            }
+          }
+
+          .options_header {
+            display: flex;
+            justify-content: space-between;
+            p {
+              color: #00000066;
+              font-size: 13px;
+            }
+            b {
+              color: #00000066;
+              font-size: 14px;
+            }
+            &:hover {
+              background: #efefef;
+            }
+          }
+        }
+
+        .open {
+          display: block;
+          opacity: 1;
+        }
+      }
+    }
+
+    .description {
+      margin-top: 20px;
+      margin-right: 60px;
+      border: 2px solid #0000001a;
+      resize: none;
+      width: 95%;
+      height: 200px;
+      border-radius: 10px;
+      padding: 10px 10px;
+    }
+  }
+}

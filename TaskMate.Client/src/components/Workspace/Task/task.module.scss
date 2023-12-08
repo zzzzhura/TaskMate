@@ -1,0 +1,131 @@
+.root {
+  margin: auto auto;
+  width: 90%;
+  border: 0.1em solid #000000;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 15px 0 30px;
+  height: 215px;
+
+  .part {
+    display: flex;
+    flex-direction: column;
+
+    &:first-child {
+      width: 35%;
+    }
+
+    &:last-child {
+      width: 30%;
+    }
+
+    .title {
+      font-weight: 400;
+      letter-spacing: 1px;
+      font-size: 16px;
+    }
+
+    .text {
+      font-size: 24px;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+
+    .start_date {
+      margin-bottom: 50px;
+      p {
+        margin-bottom: 7px;
+      }
+      span {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 26px;
+        letter-spacing: 0.07em;
+      }
+    }
+
+    .end_date {
+      p {
+        margin-bottom: 7px;
+      }
+      span {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 26px;
+        letter-spacing: 0.07em;
+      }
+    }
+
+    .action_btn {
+        position: relative;
+        margin: 0 0 0 auto;
+        cursor: pointer;
+    }
+
+    .actions {
+      display: none;
+      position: absolute;
+      z-index: 1;
+      top: -70px;
+      right: 40px;
+      border: 1px solid #ddd;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 10px;
+      height: 65px;
+      width: 190px;
+      background: #ffffff;
+      box-shadow: -4px 4px 14px 0px #00000024;
+      transition: opacity ease-in-out 100s;
+      opacity: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 8px 10px;
+        width: 100%;
+        margin: 0;
+
+        img {
+            margin-right: 10px;
+        }
+
+        &:hover {
+          background: rgb(238, 238, 238);
+        }
+      }
+
+      .delete_action {
+        a {
+          color: red;
+        }
+      }
+    }
+
+    .open {
+      display: block;
+      opacity: 1;
+    }
+
+    .end_button {
+      font-size: 18px;
+      background: linear-gradient(
+        107.14deg,
+        #72aaff -16.57%,
+        #b99def 18.13%,
+        #ff8fe0 57.79%,
+        #ffc67b 91.78%,
+        #fff621 119.4%
+      );
+      box-shadow: 0px 4px 20px 0px #af9ff299;
+      border-radius: 20px;
+      border: none;
+      gap: 10px;
+      margin: 40px 0 0 20px;
+      color: white;
+      width: 200px;
+      height: 50px;
+    }
+  }
+}

@@ -1,0 +1,131 @@
+@import "../../scss/variables";
+
+.root {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100%;
+
+  main {
+    width: 55%;
+    background: white;
+    backdrop-filter: blur(10px);
+
+    .container {
+      margin: 10px 120px;
+      .logo {
+        background: white;
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+        width: 100%;
+        .word {
+          width: 190px;
+          margin-left: 25px;
+        }
+        .icon {
+          width: 50px;
+        }
+      }
+
+      .title {
+        font-size: 32px;
+        font-weight: 800;
+        margin-top: 80px;
+        line-height: 42.26px;
+        letter-spacing: 0.03em;
+      }
+
+      .subtitle {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 23px;
+        letter-spacing: 0.03em;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 90px;
+
+        .input_container {
+          width: 100%;
+
+          input {
+            color: rgba(0, 0, 0, 0.825);
+            box-shadow: -1px 2px 2px 2px #0000001A;
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            padding: 16px 172px 16px 24px;
+            background: white;
+            border: 1px solid #000000b2;
+            font-size: 18px;
+
+            &::placeholder {
+              font-size: 18px;
+              color: #000000B2;
+            }
+          }
+
+          .password_eye {
+            float: right;
+            margin-right: 15px;
+            margin-top: -45px;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+          }
+        }
+
+        .error {
+          color: rgb(230, 0, 0);
+          font-size: 14px;
+          margin-bottom: 15px;
+          margin-left: 10px;
+        }
+
+        button {
+          font-size: 22px;
+          background: linear-gradient(
+            108.5deg,
+            #72aaff -0.22%,
+            #b99def 25.3%,
+            #ff8fe0 54.47%,
+            #ffc67b 79.47%,
+            #fff621 99.78%
+          );
+          box-shadow: 0px 15px 55px -10px #8ca6fa40;
+          padding: 16px, 72px, 16px, 72px;
+          border-radius: 20px;
+          border: none;
+          width: 350px;
+          height: 60px;
+          gap: 10px;
+          margin: 40px auto 0 auto;
+        }
+
+        .link {
+          text-align: center;
+          margin-top: 20px;
+          color: #00000080;
+
+          a {
+            margin-left: 10px;
+            color: #8ca6fa;
+          }
+        }
+      }
+    }
+  }
+
+  .bg {
+    background-image: url("/img/bg.svg");
+    width: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+}

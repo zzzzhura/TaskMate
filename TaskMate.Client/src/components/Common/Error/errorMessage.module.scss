@@ -1,0 +1,19 @@
+.root {
+    padding: 15px 20px;
+    background: whitesmoke;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: 1s;
+    animation: show 1s 1;
+    animation-fill-mode: forwards;
+    opacity:0;
+
+    @keyframes show {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+}
