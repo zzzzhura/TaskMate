@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL
 
 export const api = createApi({
   reducerPath: "api",
-  tagTypes: ["Auth", "Tags", "Notes", "Tasks"],
+  tagTypes: ["Auth", "Tags", "Notes", "Tasks", "Accounts"],
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL,
     prepareHeaders: (headers, { getState }) => {

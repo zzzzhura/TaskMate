@@ -1,6 +1,5 @@
 .root {
   .cover {
-    background-image: url(/img/note-cover.png);
     background-size: cover;
     height: 300px;
     position: relative;
@@ -33,6 +32,20 @@
   .info {
     margin-left: 100px;
     margin-top: 20px;
+
+    .header {
+      flex-direction: row;
+      display: flex;
+      align-items: center;
+      
+      .export_btn {
+        margin-left: 30px;
+        border-radius: 7px;
+        padding: 10px;
+        font-size: 16px;
+      }
+    }
+
     .title {
       font-weight: 800;
     }

@@ -25,7 +25,14 @@ public class TasksController : ApiController
     [HttpGet("completed")]
     public async Task<IActionResult> GetCompleted()
     {
-        var tasks = await _tasksService.GetCompletedTaskAsync();
+        var tasks = await _tasksService.GetCompletedTasksAsync();
+        return Ok(tasks.Select(TaskMapper.MapToResponse));
+    } 
+    
+    [HttpGet("urgent")]
+    public async Task<IActionResult> GetUrgentTasks()
+    {
+        var tasks = await _tasksService.GetUrgentTasksAsync();
         return Ok(tasks.Select(TaskMapper.MapToResponse));
     } 
     
@@ -34,6 +41,13 @@ public class TasksController : ApiController
     {
         var task = await _tasksService.GetTaskAsync(id);
         return Ok(TaskMapper.MapToResponse(task));
+    } 
+    
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string searchStr, [FromQuery] bool isCompleted)
+    {
+        var tasks = await _tasksService.SearchTasksAsync(searchStr, isCompleted);
+        return Ok(tasks.Select(TaskMapper.MapToResponse));
     } 
     
     [HttpPost]
@@ -47,6 +61,13 @@ public class TasksController : ApiController
     public async Task<IActionResult> Update(long id, TaskRequest request)
     {
         await _tasksService.UpdateTaskAsync(id, request);
+        return Ok();
+    } 
+    
+    [HttpPut("complete/{taskId:long}")]
+    public async Task<IActionResult> Complete(long taskId)
+    {
+        await _tasksService.CompleteTaskAsync(taskId);
         return Ok();
     } 
     

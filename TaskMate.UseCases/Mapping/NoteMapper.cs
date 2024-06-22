@@ -11,9 +11,10 @@ public static class NoteMapper
     {
         var createdDate = note.CreatedDate.Humanize(culture: CultureInfo.CurrentCulture);
         var updatedDate = note.UpdatedDate.Humanize(culture: CultureInfo.CurrentCulture);
+        var tags = note.Tags.Select(TagMapper.MapToResponse).ToList();
         
         return 
-            new NoteResponse(note.Id, note.Title, note.Text, note.IsArchived, 
-                createdDate, updatedDate, note.UserId, note.Tags);
+            new NoteResponse(note.Id, note.Title, note.Image, note.Text, note.IsArchived, 
+                createdDate, updatedDate, note.UserId, tags);
     }
 }

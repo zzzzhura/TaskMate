@@ -1,0 +1,137 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
+
+  .content {
+    width: 100vw;
+
+    .profile {
+      cursor: pointer;
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 23px;
+      justify-content: end;
+      margin-right: 30px;
+
+      p {
+        font-family: "Raleway", sans-serif;
+        font-weight: 600;
+        font-size: 18px;
+      }
+
+      img {
+        width: 30px;
+        margin-left: 10px;
+      }
+
+      .actions {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        top: 7%;
+        right: 50px;
+        border: 1px solid #ddd;
+        font-size: 12px;
+        font-weight: 500;
+        border-radius: 10px;
+        height: 40px;
+        padding-top: 2px;
+        width: 190px;
+        background: #ffffff;
+        box-shadow: -4px 4px 14px 0px #00000024;
+        transition: opacity ease-in-out 100s;
+        opacity: 0;
+
+        &:hover {
+          display: block;
+        }
+
+        li {
+          display: flex;
+          align-items: center;
+          padding: 8px 10px;
+          width: 100%;
+          margin: 0;
+
+          &:hover {
+            background: rgb(238, 238, 238);
+          }
+        }
+
+        .exit_action {
+          a {
+            color: red;
+          }
+        }
+      }
+
+      .open {
+        display: block;
+        opacity: 1;
+      }
+    }
+
+    main {
+      border-top: 1px solid #0000001a;
+      padding-top: 40px;
+      padding-left: 40px;
+
+      .header {
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        justify-content: space-between;
+        .controls {
+          display: flex;
+          flex-direction: column;
+          margin-right: 50px;
+          button {
+            font-size: 21px;
+            width: 200px;
+            height: 40px;
+            border-radius: 12px;
+            border: 1px solid #00000087;
+            background: #fff;
+            margin-bottom: 10px;
+          }
+
+          .active {
+            color: white;
+            background: linear-gradient(
+              107.14deg,
+              #72aaff -16.57%,
+              #b99def 18.13%,
+              #ff8fe0 57.79%,
+              #ffc67b 91.78%,
+              #fff621 119.4%
+            );
+            box-shadow: 0px 4px 20px 0px #af9ff299;
+            border: none;
+          }
+        }
+      }
+    }
+  }
+
+  .main {
+    .sections {
+      display: flex;
+      .control {
+        display: flex;
+        justify-content: space-between;
+        width: 580px;
+        margin-bottom: 20px;
+        img {
+          margin-left: 20px;
+          cursor: pointer;
+        }
+      }
+      img {
+        cursor: pointer;
+      }
+    }
+  }
+}

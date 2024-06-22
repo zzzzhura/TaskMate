@@ -1,11 +1,11 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import styles from "./status.module.scss";
 
 interface StatusProps {
   name: string;
 }
 
-const Status: FC<StatusProps> = ({ name }) => {
+const StatusSpan: FC<StatusProps> = ({ name }) => {
   return (
     <p
       className={`${styles.root} ${
@@ -22,4 +22,4 @@ const Status: FC<StatusProps> = ({ name }) => {
   );
 };
 
-export default Status;
+export default StatusSpan;

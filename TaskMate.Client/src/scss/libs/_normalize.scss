@@ -3,7 +3,7 @@
   margin: 0;
   list-style: none;
   outline: none;
-  font-family: "Roboto Slab", serif;
+  font-family: Roboto, serif;
   box-sizing: border-box;
 }
 
@@ -52,6 +52,12 @@ a {
 button {
   cursor: pointer;
   border: none;
+}
+
+.error {
+  color: rgb(230, 0, 0);
+  font-size: 14px;
+  margin-left: 10px;
 }
 
 @mixin noselect {

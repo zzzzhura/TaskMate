@@ -37,6 +37,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             new Claim(JwtRegisteredClaimNames.Iat, DateTime.Now.ToUniversalTime()
                 .ToString(CultureInfo.CurrentCulture)),
             new Claim(ClaimTypes.Role, account.Role.ToString()),
+            new Claim("role", account.Role.ToString()),
         };
 
         var securityToken = new JwtSecurityToken(

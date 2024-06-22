@@ -5,9 +5,10 @@ namespace TaskMate.UseCases.Mapping.Responses;
 public record NoteResponse(
     long Id,
     string Title,
+    byte[] Image,
     string? Text,
     bool IsArchived,
     string CreatedDate,
     string UpdatedDate,
     long UserId,
-    IReadOnlyCollection<Tag> Tags);
+    List<TagResponse> Tags);

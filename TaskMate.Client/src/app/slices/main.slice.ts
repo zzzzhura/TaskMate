@@ -1,14 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
 import { notesApi } from "../api/notes/notes.api";
 import { tasksApi } from "../api/tasks/tasks.api";
+import { Task } from "../api/tasks/types/task";
 
 export interface MainState {
   currentNote: Note | null;
   currentTask: Task | null;
   notesList: Note[] | null;
   taskList: Task[] | null;
-  sectionName: string;
+  fullNotes: Note[] | null;
+  fullTasks: Task[] | null;
+  sectionName:
+    | "Личные"
+    | "Без тегов"
+    | "Архив"
+    | "Все"
+    | "Срочные"
+    | "Выполненные"
+    | null;
 }
 
 const initialState: MainState = {
@@ -16,7 +25,9 @@ const initialState: MainState = {
   currentTask: null,
   notesList: null,
   taskList: null,
-  sectionName: "",
+  sectionName: null,
+  fullNotes: null,
+  fullTasks: null,
 };
 
 export const mainSlice = createSlice({
@@ -34,6 +45,12 @@ export const mainSlice = createSlice({
     setSection: (state, action) => {
       state.sectionName = action.payload;
     },
+    setNotesList: (state, action) => {
+      state.notesList = action.payload;
+    },
+    setTasksList: (state, action) => {
+      state.taskList = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -41,6 +58,8 @@ export const mainSlice = createSlice({
       notesApi.endpoints.getMyNotes.matchFulfilled,
       (state, { payload }) => {
         state.notesList = payload;
+        state.fullNotes = payload;
+        state.fullTasks = null;
         state.taskList = null;
       }
     );
@@ -49,6 +68,8 @@ export const mainSlice = createSlice({
       notesApi.endpoints.getMyArchived.matchFulfilled,
       (state, { payload }) => {
         state.notesList = payload;
+        state.fullNotes = payload;
+        state.fullTasks = null;
         state.taskList = null;
       }
     );
@@ -57,6 +78,8 @@ export const mainSlice = createSlice({
       notesApi.endpoints.getNoTags.matchFulfilled,
       (state, { payload }) => {
         state.notesList = payload;
+        state.fullNotes = payload;
+        state.fullTasks = null;
         state.taskList = null;
       }
     );
@@ -65,6 +88,8 @@ export const mainSlice = createSlice({
       tasksApi.endpoints.getMyTasks.matchFulfilled,
       (state, { payload }) => {
         state.taskList = payload;
+        state.fullTasks = payload;
+        state.fullNotes = null;
         state.notesList = null;
       }
     );
@@ -73,16 +98,29 @@ export const mainSlice = createSlice({
       tasksApi.endpoints.getMyCompleted.matchFulfilled,
       (state, { payload }) => {
         state.taskList = payload;
+        state.fullTasks = payload;
+        state.fullNotes = null;
         state.notesList = null;
+      }
+    );
+
+    builder.addMatcher(
+      tasksApi.endpoints.getUrgents.matchFulfilled,
+      (state, { payload }) => {
+        state.taskList = payload;
+        state.notesList = null;
+        state.fullTasks = payload;
+        state.fullNotes = null;
+      }
+    );
+
+    builder.addMatcher(
+      tasksApi.endpoints.getTask.matchFulfilled,
+      (state, { payload }) => {
+        state.currentTask = payload;
       }
     );
   },
 });
-
-export const selectCurrentNote = (state: RootState) => state.main.currentNote;
-export const selectCurrentTask = (state: RootState) => state.main.currentTask;
-export const selectSection = (state: RootState) => state.main.sectionName;
-export const selectNotes = (state: RootState) => state.main.notesList;
-export const selectTasks = (state: RootState) => state.main.taskList;
 
 export const { actions, reducer } = mainSlice;

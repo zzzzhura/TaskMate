@@ -9,6 +9,7 @@ public class Note : Entity
     
     public string Title { get; private set; }
     public string? Text { get; private set; }
+    public byte[]? Image { get; private set; }
     public bool IsArchived { get; private set; }
     public DateTime CreatedDate { get; private set; }
     public DateTime UpdatedDate { get; private set; }
@@ -44,5 +45,17 @@ public class Note : Entity
         if (IsArchived)
             throw new Exception("Задача уже в архиве");
         IsArchived = true;
+    }
+
+    public void SetCover(byte[] imageBytes)
+    {
+        Image = imageBytes;
+    }
+    
+    public void RemoveCover()
+    {
+        if (Image is null)
+            throw new Exception("Обложка уже удалена");
+        Image = null;
     }
 }

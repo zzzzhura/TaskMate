@@ -30,6 +30,23 @@ public class AccountService
             ?? throw new Exception("Not found current account");
         return account;
     }
+    
+    public async Task AddAccountAsync(AddAccountRequest request)
+    {
+        if(await _dbContext.Accounts.FirstOrDefaultAsync(a => a.Username == request.Username) is not null)
+            throw new Exception("Account exists");
+
+        var (hash, salt) = _passwordHasher.HashPassword(request.Password);
+        var createdAccount = Account.Create(request.Username, request.Role, hash, salt, request.Email);
+        await _dbContext.Accounts.AddAsync(createdAccount);
+        await _dbContext.SaveChangesAsync();
+    }
+    
+    public async Task<List<Account>> GetAllAccountsAsync()
+    {
+        var accounts = await _dbContext.Accounts.ToListAsync();
+        return accounts;
+    }
 
     public async Task<AuthResult> SignInAsync(SignInAccountRequest request)
     {

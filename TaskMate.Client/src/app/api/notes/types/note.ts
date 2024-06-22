@@ -3,6 +3,7 @@ interface Note {
     userId: number;
     title: string;
     text: string;
+    image: ArrayBuffer;
     createdDate: string;
     updatedDate: string;
     tags: Tag[];

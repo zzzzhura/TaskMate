@@ -43,6 +43,13 @@ public class NotesController : ApiController
         return Ok(NoteMapper.MapToResponse(note));
     }
     
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string searchStr, [FromQuery] bool isArchive)
+    {
+        var notes = await _notesService.SearchNotesAsync(searchStr, isArchive);
+        return Ok(notes.Select(NoteMapper.MapToResponse));
+    }
+    
     [HttpPost]
     public async Task<IActionResult> Create(CreateNoteRequest request)
     {
@@ -76,5 +83,19 @@ public class NotesController : ApiController
     {
         await _notesService.DeleteNoteAsync(noteId);
         return Ok(noteId);
+    }
+    
+    [HttpPut("newCover/{noteId:long}")]
+    public async Task<IActionResult> SetCover(long noteId, [FromForm] IFormFile image)
+    {
+        await _notesService.SetNoteCoverAsync(noteId, image);
+        return Ok();
+    }
+    
+    [HttpPut("removeCover/{noteId:long}")]
+    public async Task<IActionResult> RemoteCover(long noteId)
+    {
+        await _notesService.RemoveCoverNoteAsync(noteId);
+        return Ok();
     }
 }

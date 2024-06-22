@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useCreateTagMutation,
   useDeleteTagMutation,
@@ -18,18 +18,21 @@ import { useActions } from "../../hooks/useActions";
 import {
   useLazyGetMyCompletedQuery,
   useLazyGetMyTasksQuery,
+  useLazyGetUrgentsQuery,
 } from "../../app/api/tasks/tasks.api";
 
 const Navbar = () => {
   const { setSection } = useActions();
 
   const { data: tags } = useGetTagsQuery();
+
   const [getArchivedTrigger] = useLazyGetMyArchivedQuery();
   const [getMyNotesTrigger] = useLazyGetMyNotesQuery();
   const [getNotesNoTagsTrigger] = useLazyGetNoTagsQuery();
 
   const [getMyTasksTrigger] = useLazyGetMyTasksQuery();
   const [getCompletedTasksTrigger] = useLazyGetMyCompletedQuery();
+  const [geUrgentTasksTrigger] = useLazyGetUrgentsQuery();
 
   const [createTag] = useCreateTagMutation();
   const [isOpenCreateTagForm, setCreateOpenTagForm] = useState(false);
@@ -38,6 +41,11 @@ const Navbar = () => {
   const [isOpenDeleteTagForm, setOpenDeleteTagForm] = useState(false);
   const [deletedTag, setDeletedTag] = useState<Tag | null>(null);
 
+  useEffect(() => {
+    getMyNotesTrigger();
+    setSection("Личные")
+  }, [])
+  
   const {
     register,
     handleSubmit,
@@ -52,18 +60,10 @@ const Navbar = () => {
     setCreateOpenTagForm(false);
   };
 
-  // const handleMyNotesClick = () => {
-  //   getMyNotesTrigger();
-  //   setSection("Личные");
-  // };
-
   const handleSectionClick = (sectionName: string) => {
     switch (sectionName) {
       case "Личные":
         getMyNotesTrigger();
-        break;
-      case "Без тегов":
-        getNotesNoTagsTrigger();
         break;
       case "Архив":
         getArchivedTrigger();
@@ -76,6 +76,9 @@ const Navbar = () => {
         break;
       case "Выполненные":
         getCompletedTasksTrigger();
+        break;
+      case "Срочные":
+        geUrgentTasksTrigger();
         break;
     }
     setSection(sectionName);
@@ -124,15 +127,24 @@ const Navbar = () => {
               <img src="/img/task-icon.svg" alt="task" />
               <p>Задачи</p>
             </summary>
-            <p className={styles.option} onClick={() => handleSectionClick("Все")}>
+            <p
+              className={styles.option}
+              onClick={() => handleSectionClick("Все")}
+            >
               <img src="/img/backpack.svg" alt="tasks" />
               <span>Все</span>
             </p>
-            <p className={styles.option}>
+            <p
+              className={styles.option}
+              onClick={() => handleSectionClick("Срочные")}
+            >
               <img src="/img/clock.svg" alt="deadline" width={21} />
               <span>Срочные</span>
             </p>
-            <p className={styles.option} onClick={() => handleSectionClick("Выполненные")}>
+            <p
+              className={styles.option}
+              onClick={() => handleSectionClick("Выполненные")}
+            >
               <img src="/img/complete.svg" alt="complete" width={21} />
               <span>Выполненные</span>
             </p>
@@ -141,8 +153,7 @@ const Navbar = () => {
 
         <li onClick={() => handleSectionClick("Архив")}>
           <details>
-            <summary>
-              <img src="/img/right-arrow.svg" alt="arrow" />
+            <summary style={{ marginLeft: "22px" }}>
               <img src="/img/archive-icon.svg" alt="archive" />
               <p>Архив</p>
             </summary>

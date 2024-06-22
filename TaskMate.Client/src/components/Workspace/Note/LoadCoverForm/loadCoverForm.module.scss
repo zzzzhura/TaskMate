@@ -1,0 +1,101 @@
+.input_file_row {
+  display: inline-block;
+}
+.input_file {
+  position: relative;
+  display: inline-block;
+
+  span {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    font-size: 15px;
+    vertical-align: middle;
+    color: rgb(255 255 255);
+    text-align: center;
+    border-radius: 15px;
+    background: rgb(199, 199, 199);
+    box-shadow: 0px 4px 20px 0px #afafaf99;
+    line-height: 22px;
+    height: 40px;
+    padding: 8px 28px;
+    box-sizing: border-box;
+    border: none;
+    margin: 0;
+    transition: background-color 0.2s;
+  }
+  input[type="file"] {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    display: block;
+    width: 0;
+    height: 0;
+    &:disabled + span {
+      background-color: #3d3d3d;
+    }
+  }
+}
+
+/* Список c превью */
+.input_file_list {
+  border: 1px dashed rgb(200, 200, 200);
+  width: 600px;
+  height: 170px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+
+  .blank {
+    text-align: center;
+    top: 30%;
+    left: 35%;
+    position: absolute;
+    p {
+      color: rgb(211, 210, 210);
+      font-weight: 300;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  }
+
+  .item {
+    display: inline-block;
+    width: 600px;
+    height: 100%;
+
+    vertical-align: top;
+    position: relative;
+
+    img {
+      width: 600px;
+      height: 170px;
+    }
+    .name {
+      text-align: center;
+      display: block;
+      font-size: 12px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .remove {
+      color: #fff;
+      text-decoration: none;
+      display: inline-block;
+      position: absolute;
+      padding: 0;
+      font-size: 13px;
+      margin: 0;
+      top: 4px;
+      right: 5px;
+      background: #ff0202;
+      width: 16px;
+      height: 16px;
+      text-align: center;
+      line-height: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+}

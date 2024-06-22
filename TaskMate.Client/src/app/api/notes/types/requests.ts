@@ -11,3 +11,8 @@ export interface AddTagRequest {
     noteId: number;
     tagId: number;
 }
+
+export interface LoadCoverRequest {
+    noteId: number;
+    formData: FormData;
+}

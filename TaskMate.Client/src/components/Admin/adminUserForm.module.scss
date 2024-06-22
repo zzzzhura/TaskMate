@@ -1,0 +1,55 @@
+.root {
+  .input_container {
+    width: 100%;
+    align-items: start;
+    display: flex;
+
+    input {
+      margin-bottom: 10px;
+    }
+
+    input[type="checkbox"]{
+        width: 20px;
+        height: 20px;
+        margin-top: 10px;
+    }
+
+    input[type="text"] {
+      color: rgba(0, 0, 0, 0.825);
+      box-shadow: -1px 2px 2px 2px #0000001a;
+      width: 100%;
+      border-radius: 15px;
+      padding: 10px 120px 10px 24px;
+      background: white;
+      border: 1px solid #000000b2;
+      font-size: 18px;
+
+      &::placeholder {
+        font-size: 18px;
+        color: #000000b2;
+      }
+    }
+
+    label {
+        margin-left: 10px;
+        font-size: 20px;
+        margin-top: 10px;
+    }
+  }
+
+  
+
+  button {
+    font-size: 22px;
+    color: white;
+    background: #a8a0f2;
+    box-shadow: 0px 15px 55px -10px #8ca6fa40;
+    padding: 16px, 72px, 16px, 72px;
+    border-radius: 20px;
+    border: none;
+    width: 350px;
+    height: 60px;
+    gap: 10px;
+    margin: 40px auto 0 auto;
+  }
+}

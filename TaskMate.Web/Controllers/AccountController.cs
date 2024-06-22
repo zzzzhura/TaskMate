@@ -27,6 +27,28 @@ public class AccountController : ApiController
     }
     
     /// <summary>
+    /// Получение списка аккаунтов
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("accounts")]
+    public async Task<IActionResult> GetAll()
+    {
+        var account = await _accountService.GetAllAccountsAsync();
+        return Ok(account);
+    }
+    
+    /// <summary>
+    /// Добавление аккаунта в админ панели
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost("accounts")]
+    public async Task<IActionResult> Add(AddAccountRequest request)
+    {
+        await _accountService.AddAccountAsync(request);
+        return Ok();
+    }
+    
+    /// <summary>
     /// Получение нового jwt токена пользователя
     /// </summary>
     /// <param name="request"></param>

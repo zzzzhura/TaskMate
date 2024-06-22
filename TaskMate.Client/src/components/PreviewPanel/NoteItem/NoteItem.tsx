@@ -1,7 +1,14 @@
-import { FC, useState } from "react";
+import { FC, MouseEvent, useState } from "react";
 import styles from "./noteItem.module.scss";
 import { useClickOutside } from "../../../hooks/useClickOutside";
-import { useDeleteNoteMutation, useMoveToArchiveMutation } from "../../../app/api/notes/notes.api";
+import {
+  useDeleteNoteMutation,
+  useMoveToArchiveMutation,
+} from "../../../app/api/notes/notes.api";
+import { api } from "../../../app/api/api";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../app/store";
+import { useActions } from "../../../hooks/useActions";
 
 interface NoteItemProps {
   id: number;
@@ -22,8 +29,31 @@ const NoteItem: FC<NoteItemProps> = ({
   onClick,
   isActive,
 }) => {
+  const dispatch = useDispatch();
+  const { sectionName } = useSelector((state: RootState) => state.main);
+
   const [deleteNote] = useDeleteNoteMutation();
+  const handleDeleteNote = (e: MouseEvent) => {
+    e.stopPropagation();
+    deleteNote(id);
+    dispatch(
+      api.util.invalidateTags([{ type: "Notes", id: sectionName?.toString() }])
+    );
+
+    setCurrentNote(null);
+  };
+
   const [moveToArchive] = useMoveToArchiveMutation();
+  const handleToArchiveNote = (e: MouseEvent) => {
+    e.stopPropagation();
+    moveToArchive(id);
+    dispatch(
+      api.util.invalidateTags([{ type: "Notes", id: sectionName?.toString() }])
+    );
+    setCurrentNote(null);
+  };
+
+  const { setCurrentNote } = useActions();
 
   const [open, setOpen] = useState(false);
 
@@ -31,9 +61,7 @@ const NoteItem: FC<NoteItemProps> = ({
     setOpen(false);
   });
 
-  const handleActionBtnClick = (
-    e: React.MouseEvent<HTMLSpanElement, MouseEvent>
-  ) => {
+  const handleActionBtnClick = (e: MouseEvent) => {
     e.stopPropagation();
     setOpen(!open);
   };
@@ -45,10 +73,7 @@ const NoteItem: FC<NoteItemProps> = ({
     >
       <div className={styles.header}>
         <h4 className={styles.title}>{name}</h4>
-        <span
-          className={styles.action_btn}
-          onClick={(e) => handleActionBtnClick(e)}
-        >
+        <span className={styles.action_btn} onClick={handleActionBtnClick}>
           <img src="/img/more.svg" alt="more" />
         </span>
 
@@ -56,11 +81,16 @@ const NoteItem: FC<NoteItemProps> = ({
           ref={domNode}
           className={`${styles.actions} ${open ? styles.open : ""}`}
         >
-          <li onClick={() => moveToArchive(id)}>
-            <img src="/img/archive-icon.svg" height={12} alt="" />
-            <a>Добавить в архив</a>
-          </li>
-          <li className={styles.delete_action} onClick={() => deleteNote(id)}>
+          {sectionName !== "Архив" && (
+            <li onClick={handleToArchiveNote}>
+              <img src="/img/archive-icon.svg" height={12} alt="" />
+              <a>Добавить в архив</a>
+            </li>
+          )}
+          <li
+            className={styles.delete_action}
+            onClick={(e) => handleDeleteNote(e)}
+          >
             <img src="/img/delete-icon.svg" height={12} alt="" />
             <a>Удалить</a>
           </li>

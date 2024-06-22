@@ -2,6 +2,7 @@ import { api } from "../api";
 import {
   AddTagRequest,
   CreateNoteRequest,
+  LoadCoverRequest,
   WriteNoteRequest,
 } from "./types/requests";
 
@@ -12,7 +13,7 @@ export const notesApi = api.injectEndpoints({
         url: `/notes`,
         method: "GET",
       }),
-      providesTags: () => [{ type: "Notes" }],
+      providesTags: () => [{ type: "Notes", id: "Личные" }],
     }),
 
     getMyArchived: builder.query<Note[], void>({
@@ -20,7 +21,7 @@ export const notesApi = api.injectEndpoints({
         url: `/notes/archive`,
         method: "GET",
       }),
-      providesTags: () => [{ type: "Notes" }],
+      providesTags: () => [{ type: "Notes", id: "Архив" }],
     }),
 
     getNoTags: builder.query<Note[], void>({
@@ -28,7 +29,14 @@ export const notesApi = api.injectEndpoints({
         url: `/notes/noTags`,
         method: "GET",
       }),
-      providesTags: () => [{ type: "Notes" }],
+      providesTags: () => [{ type: "Notes", id: "Без тегов" }],
+    }),
+
+    searchNotes: builder.query<Note[], { search: string; isArchive: boolean }>({
+      query: (request: { search: string; isArchive: boolean }) => ({
+        url: `/notes/search?searchStr=${request.search}&isArchive=${request.isArchive}`,
+        method: "GET",
+      }),
     }),
 
     getNote: builder.query<Note[], number>({
@@ -44,7 +52,6 @@ export const notesApi = api.injectEndpoints({
         url: `/notes`,
         method: "POST",
       }),
-      invalidatesTags: () => [{ type: "Notes" }],
     }),
 
     writeNote: builder.mutation<Note, WriteNoteRequest>({
@@ -53,7 +60,6 @@ export const notesApi = api.injectEndpoints({
         url: `/notes/${request.noteId}`,
         method: "PUT",
       }),
-      invalidatesTags: () => [{ type: "Notes" }],
     }),
 
     addTag: builder.mutation<void, AddTagRequest>({
@@ -62,7 +68,6 @@ export const notesApi = api.injectEndpoints({
         url: `/notes/${request.noteId}/tagging/${request.tagId}`,
         method: "PUT",
       }),
-      invalidatesTags: () => [{ type: "Notes" }],
     }),
 
     moveToArchive: builder.mutation<void, number>({
@@ -70,7 +75,25 @@ export const notesApi = api.injectEndpoints({
         url: `/notes/archive/${noteId}`,
         method: "PUT",
       }),
-      invalidatesTags: () => [{ type: "Notes" }],
+    }),
+
+    setCover: builder.mutation<void, LoadCoverRequest>({
+      query: (request: LoadCoverRequest) => ({
+        body: request.formData,
+        prepareHeaders: (headers: Headers) => {
+          headers.set("Content-Type", "multipart/form-data");
+          return headers;
+        },
+        url: `/notes/newCover/${request.noteId}`,
+        method: "PUT",
+      }),
+    }),
+
+    removeCover: builder.mutation<void, number>({
+      query: (noteId: number) => ({
+        url: `/notes/removeCover/${noteId}`,
+        method: "PUT",
+      }),
     }),
 
     deleteNote: builder.mutation<void, number>({
@@ -78,7 +101,6 @@ export const notesApi = api.injectEndpoints({
         url: `/notes/${noteId}`,
         method: "DELETE",
       }),
-      invalidatesTags: () => [{ type: "Notes" }],
     }),
   }),
 });
@@ -89,8 +111,11 @@ export const {
   useDeleteNoteMutation,
   useAddTagMutation,
   useMoveToArchiveMutation,
+  useSetCoverMutation,
+  useRemoveCoverMutation,
   useGetNoteQuery,
   useLazyGetMyArchivedQuery,
   useLazyGetMyNotesQuery,
-  useLazyGetNoTagsQuery
+  useLazyGetNoTagsQuery,
+  useLazySearchNotesQuery,
 } = notesApi;

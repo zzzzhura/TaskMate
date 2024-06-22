@@ -1,0 +1,21 @@
+﻿services:
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=taskmate-db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - tm_ntw
+        
+volumes:
+  pgdata:
+    
+networks:
+  tm_ntw:

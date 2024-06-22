@@ -1,4 +1,6 @@
+
 import { api } from "../api";
+import { Task } from "./types/task";
 
 export const tasksApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,7 +9,7 @@ export const tasksApi = api.injectEndpoints({
         url: `/tasks`,
         method: "GET",
       }),
-      providesTags: () => [{ type: "Tasks" }],
+      providesTags: () => [{ type: "Tasks", id: "Все" }],
     }),
 
     getMyCompleted: builder.query<Task[], void>({
@@ -15,7 +17,29 @@ export const tasksApi = api.injectEndpoints({
         url: `/tasks/completed`,
         method: "GET",
       }),
-      providesTags: () => [{ type: "Tasks" }],
+      providesTags: () => [{ type: "Tasks", id: "Выполненные" }],
+    }),
+
+    getUrgents: builder.query<Task[], void>({
+      query: () => ({
+        url: `/tasks/urgent`,
+        method: "GET",
+      }),
+      providesTags: () => [{ type: "Tasks", id: "Срочные" }],
+    }),
+
+    searchTasks: builder.query<Task[], {search: string, isCompleted: boolean}>({
+      query: (request: {search: string, isCompleted: boolean}) => ({
+        url: `/tasks/search?searchStr=${request.search}&isCompleted=${request.isCompleted}`,
+        method: "GET",
+      }),
+    }),
+
+    getTask: builder.query<Task, number>({
+      query: (taskId: number) => ({
+        url: `/tasks/${taskId}`,
+        method: "GET",
+      }),
     }),
 
     createTask: builder.mutation<void, TaskRequest>({
@@ -24,7 +48,6 @@ export const tasksApi = api.injectEndpoints({
         url: `/tasks`,
         method: "POST",
       }),
-      invalidatesTags: () => [{ type: "Tasks" }],
     }),
 
     updateTask: builder.mutation<void, TaskRequest>({
@@ -33,7 +56,13 @@ export const tasksApi = api.injectEndpoints({
         url: `/tasks/${request.id}`,
         method: "PUT",
       }),
-      invalidatesTags: () => [{ type: "Tasks" }],
+    }),
+
+    completeTask: builder.mutation<void, number>({
+      query: (taskId: number) => ({
+        url: `/tasks/complete/${taskId}`,
+        method: "PUT",
+      }),
     }),
 
     deleteTask: builder.mutation<void, number>({
@@ -41,7 +70,6 @@ export const tasksApi = api.injectEndpoints({
         url: `/tasks/${taskId}`,
         method: "DELETE",
       }),
-      invalidatesTags: () => [{ type: "Tasks" }],
     }),
   }),
 });
@@ -49,7 +77,12 @@ export const tasksApi = api.injectEndpoints({
 export const {
   useLazyGetMyCompletedQuery,
   useLazyGetMyTasksQuery,
+  useLazyGetUrgentsQuery,
+  useLazyGetTaskQuery,
+  useGetTaskQuery,
+  useLazySearchTasksQuery,
   useCreateTaskMutation,
   useDeleteTaskMutation,
+  useCompleteTaskMutation,
   useUpdateTaskMutation
 } = tasksApi;

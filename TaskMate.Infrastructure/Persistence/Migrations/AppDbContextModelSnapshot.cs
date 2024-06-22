@@ -94,6 +94,10 @@ namespace TaskMate.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_date");
 
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("bytea")
+                        .HasColumnName("image");
+
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean")
                         .HasColumnName("is_archived");
