@@ -20,7 +20,7 @@ interface NoteProps {
   title: string;
   noteText: string;
   tags: Tag[];
-  image: ArrayBuffer;
+  image: ArrayBuffer | string;
 }
 
 const Note: FC<NoteProps> = ({ title, noteText, tags, id, image }) => {
@@ -50,8 +50,10 @@ const Note: FC<NoteProps> = ({ title, noteText, tags, id, image }) => {
     setIsHovering(false);
   };
 
+  const [imageSrc, setImageSrc] = useState("");
+
   const [writeNote] = useWriteNoteMutation();
-  const [text, setText] = useState("");
+  const [text, setText] = useState<string | null>();
 
   const [addTag] = useAddTagMutation();
 
@@ -65,15 +67,18 @@ const Note: FC<NoteProps> = ({ title, noteText, tags, id, image }) => {
   useEffect(() => {
     setText(noteText);
 
-    if (image) setImageSrc(`data:image/png;base64,${image}`);
-  }, [id, image]);
+    if (image) {
+      const img =
+        typeof image === "string" ? image : `data:image/png;base64,${image}`;
+      setImageSrc(`data:image/png;base64,${image}`);
+    }
+  }, [noteText, image]);
 
   const handleBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    writeNote({ text: value, noteId: id });
-  };
+    writeNote({ text: value, noteId: id }).unwrap().then(() => location.reload());
+  }; 
 
-  const [imageSrc, setImageSrc] = useState("");
   const [removeCover] = useRemoveCoverMutation();
   const handleRemoveCover = () => {
     removeCover(id);
@@ -140,7 +145,7 @@ const Note: FC<NoteProps> = ({ title, noteText, tags, id, image }) => {
           </div>
           <textarea
             ref={targetRef}
-            value={text}
+            value={text!}
             onChange={(e) => setText(e.target.value)}
             placeholder="Напишите что-нибудь..."
             className={styles.description}

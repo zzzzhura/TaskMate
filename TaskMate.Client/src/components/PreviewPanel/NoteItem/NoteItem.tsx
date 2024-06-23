@@ -102,7 +102,11 @@ const NoteItem: FC<NoteItemProps> = ({
           <span key={index}>{tag.name}</span>
         ))}
       </div>
-      <p className={styles.description}>{description}</p>
+      <p className={styles.description}>
+        {description && description.length > 72
+          ? description.substring(0, 72) + "..."
+          : description}
+      </p>
       <div className={styles.date}>
         <img src="/img/date.svg" alt="time" />
         <p>{date}</p>

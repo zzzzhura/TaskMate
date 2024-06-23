@@ -29,12 +29,8 @@ const RegisterForm = () => {
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const onSubmit: SubmitHandler<IRegisterRequest> = (data) => {
-    signUp(data)
-      .unwrap()
-      .then((_) => {
-        navigate("/");
-      }) //is success
-      .catch((rejected) => setError(rejected.data.title)); //is error
+    signUp(data);
+    navigate("/login");
   };
 
   return (

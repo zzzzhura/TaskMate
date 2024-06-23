@@ -20,9 +20,12 @@ import {
   useLazyGetMyTasksQuery,
   useLazyGetUrgentsQuery,
 } from "../../app/api/tasks/tasks.api";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { setSection } = useActions();
+
+  const navigate = useNavigate();
 
   const { data: tags } = useGetTagsQuery();
 
@@ -87,7 +90,7 @@ const Navbar = () => {
   return (
     <div className={styles.root}>
       <ul>
-        <div className={styles.logo}>
+        <div className={styles.logo} onClick={() => navigate("/")}>
           <img src="/img/icon.svg" className={styles.icon} alt="icon" />
           <img src="/img/title.svg" className={styles.word} alt="title" />
         </div>
@@ -106,10 +109,10 @@ const Navbar = () => {
               <img src="/img/account_circle.svg" alt="account" />
               <span>Личные</span>
             </p>
-            <p className={`${styles.option} ${styles.disabled}`}>
+            {/* <p className={`${styles.option} ${styles.disabled}`}>
               <img src="/img/share.svg" alt="share" />
               <span>Общий доступ</span>
-            </p>
+            </p> */}
             <p
               className={styles.option}
               onClick={() => handleSectionClick("Без тегов")}

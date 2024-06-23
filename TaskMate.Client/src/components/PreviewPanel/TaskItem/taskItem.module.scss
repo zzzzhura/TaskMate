@@ -97,6 +97,14 @@
     }
   }
 
+  .status {
+    display: flex;
+    align-items: end;
+    img {
+      margin-left: 80px;
+    }
+  }
+
   .tags {
     margin-top: 12px;
     display: flex;

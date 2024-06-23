@@ -11,6 +11,7 @@ import Task from "./Task/TaskWindow";
 import { useNavigate } from "react-router-dom";
 import { useActions } from "../../hooks/useActions";
 import { Status } from "../../app/api/tasks/types/task";
+import { base64ArrayBuffer } from "../../app/utils/base64ArrayBuffer";
 
 const Workspace = () => {
   const navigate = useNavigate();

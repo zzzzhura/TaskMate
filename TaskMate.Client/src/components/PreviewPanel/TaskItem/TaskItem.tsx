@@ -74,7 +74,10 @@ const TaskItem: FC<TaskItemProps> = ({ task, onClick, isActive }) => {
             </li>
           </ul>
         </div>
-        <Status name={task.status} />
+        <div className={styles.status}>
+          <Status name={task.status} />
+          {task.isCompleted && <img width={35} height={35} src="/img/complete.png" />}
+        </div>
       </div>
       {isOpen && (
         <ModalWindow title="Редактирование задачи" setIsOpen={setIsOpen}>

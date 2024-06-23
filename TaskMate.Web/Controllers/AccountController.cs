@@ -31,6 +31,7 @@ public class AccountController : ApiController
     /// </summary>
     /// <returns></returns>
     [HttpGet("accounts")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAll()
     {
         var account = await _accountService.GetAllAccountsAsync();
@@ -42,6 +43,7 @@ public class AccountController : ApiController
     /// </summary>
     /// <returns></returns>
     [HttpPost("accounts")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Add(AddAccountRequest request)
     {
         await _accountService.AddAccountAsync(request);

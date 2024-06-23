@@ -58,5 +58,5 @@ export const addUserSchema = Yup.object().shape({
     )
     .min(6, "Пароль слишком короткий")
     .max(20, "Пароль слишком длинный"),
-  email: Yup.string().email(),
+  email: Yup.string(),
 });

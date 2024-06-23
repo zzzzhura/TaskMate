@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import styles from "./loadCoverForm.module.scss";
 import { useSetCoverMutation } from "../../../../app/api/notes/notes.api";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -26,15 +26,15 @@ const LoadCoverForm: FC<LoadCoverFormProps> = ({
 }) => {
   const [setCover] = useSetCoverMutation();
 
-  const [blob, setBlob] = useState<Blob>();
-
   const { setCurrentNote } = useActions();
   const { currentNote } = useSelector((state: RootState) => state.main);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(URL.createObjectURL(event.target.files![0]));
-    setValue("image", event.target.files![0]);
-    setBlob(event.target.files![0]);
+    const file = event.currentTarget.files![0];
+    const objectURL = URL.createObjectURL(file);
+
+    setFile(objectURL);
+    setValue("image", file);
   };
 
   const { register, handleSubmit, setValue } = useForm<FormValues>({
@@ -46,9 +46,13 @@ const LoadCoverForm: FC<LoadCoverFormProps> = ({
     const formData = new FormData();
     formData.append("image", data.image);
 
-    setCover({ formData: formData, noteId: noteId });
-    setCurrentNote({ ...currentNote, image: await blob!.arrayBuffer() });
-
+    setCover({ formData: formData, noteId: noteId })
+      .unwrap()
+      .then(() => location.reload());
+    setCurrentNote({
+      ...currentNote,
+      image: file,
+    });
     setIsOpen(false);
   };
 
@@ -91,4 +95,3 @@ const LoadCoverForm: FC<LoadCoverFormProps> = ({
 };
 
 export default LoadCoverForm;
-
